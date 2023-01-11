@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Card, Spin, Divider } from "antd";
+import { Col, Row, Card, Spin, Divider, Button } from "antd";
 import { apiInstance } from "../utils/api";
+import { Link } from "react-router-dom";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -40,7 +41,19 @@ const Bookings = () => {
           flexDirection: "column",
         }}
       >
-        <h3>My Bookings</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "2rem",
+          }}
+        >
+          <h3>My Bookings</h3>
+          <Link to="/order">
+            <Button type="primary">Order</Button>
+          </Link>
+        </div>
+
         <Row gutter={16}>
           {loading ? (
             <Spin />
