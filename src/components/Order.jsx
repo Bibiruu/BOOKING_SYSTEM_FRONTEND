@@ -1,9 +1,28 @@
 import React, { useState } from "react";
-import { Col, Row, Form, Input, Button, Spin, Divider } from "antd";
+import { Col, Row, Form, Input, Button, Spin, Divider, message } from "antd";
+import { apiInstance } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const Order = () => {
+  const navigate = useNavigate();
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const postBooking = async () => {
+    //console.log("Form values", values);
+    try {
+      setLoading(true);
+      const response = await apiInstance.get("/services");
+      const data = response.data;
+      console.log("THIS THE DATA", data);
+      if (data.success) {
+        setOrder(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
 
   return (
     <div
@@ -41,10 +60,7 @@ const Order = () => {
               span={12}
               offset={6}
             >
-              <Form
-                //form={form}
-                layout="vertical"
-              >
+              <Form form={postBooking()} layout="vertical">
                 <Form.Item
                   label="Raivaussiivous osoite"
                   name="requiredMarkValue"
@@ -60,6 +76,13 @@ const Order = () => {
                   <Input.TextArea rows={3} placeholder="Huomio/Viestikenttä" />
                 </Form.Item>
                 <Divider />
+                {order.map((services, id) => (
+                  <div key={id}>
+                    <p>Check {services.name}</p>
+                    <p>{services.price}</p>
+                  </div>
+                ))}
+
                 <Button type="primary">Submit</Button>
               </Form>
             </Col>
