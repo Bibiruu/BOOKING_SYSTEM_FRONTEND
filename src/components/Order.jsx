@@ -1,28 +1,32 @@
 import React, { useState } from "react";
-import { Col, Row, Form, Input, Button, Spin, Divider, message } from "antd";
-import { apiInstance } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Col, Row, Form, Input, Button, Spin, Divider, Calendar } from "antd";
+//import { apiInstance } from "../utils/api";
+//import { useNavigate } from "react-router-dom";
 
 const Order = () => {
-  const navigate = useNavigate();
-  const [order, setOrder] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const onPanelChange = (value, mode) => {
+    console.log(value.format("YYYY-MM-DD"), mode);
+  };
+  //const navigate = useNavigate();
+  //const [order, setOrder] = useState([]);
+  //const [loading, setLoading] = useState(false);
 
-  const postBooking = async () => {
-    //console.log("Form values", values);
+  /*const getServices = async (values) => {
+    console.log("Form values", values);
     try {
       setLoading(true);
-      const response = await apiInstance.get("/services");
-      const data = response.data;
+      const response = await apiInstance.get("/services", values);
+      const data = response.data; // getting the data
       console.log("THIS THE DATA", data);
-      if (data.success) {
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.accessToken);
         setOrder(data.data);
       }
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
-  };
+  };*/
 
   return (
     <div
@@ -48,45 +52,45 @@ const Order = () => {
             marginBottom: "2rem",
           }}
         >
-          <h3>PLACE AN ORDER</h3>
+          <h3>TILAUS</h3>
         </div>
 
         <Row style={{ height: "100%", marginBottom: "3rem" }} gutter={16}>
-          {loading ? (
-            <Spin />
-          ) : (
-            <Col
-              style={{ backgroundColor: "#fff", padding: "1rem" }}
-              span={12}
-              offset={6}
-            >
-              <Form form={postBooking()} layout="vertical">
-                <Form.Item
-                  label="Raivaussiivous osoite"
-                  name="requiredMarkValue"
-                  required
-                >
-                  <Input placeholder="Raivaussiivous osoite" />
-                </Form.Item>
-                <Form.Item
-                  label="Description/Viesti"
-                  required
-                  tooltip="Tähän voi antaa lisää infoa tai huomioita/ohjeita"
-                >
-                  <Input.TextArea rows={3} placeholder="Huomio/Viestikenttä" />
-                </Form.Item>
-                <Divider />
-                {order.map((services, id) => (
-                  <div key={id}>
-                    <p>Check {services.name}</p>
-                    <p>{services.price}</p>
-                  </div>
-                ))}
+          <Col
+            style={{ backgroundColor: "#fff", padding: "1rem" }}
+            span={12}
+            offset={6}
+          >
+            <Form layout="vertical">
+              <Calendar
+                style={{
+                  width: "300px",
+                  border: "1px",
+                  backgroundColor: "#f0f0f0",
+                  borderradius: "8px",
+                }}
+                fullscreen={false}
+                onPanelChange={onPanelChange}
+              />
+              <Form.Item
+                label="Raivaussiivous osoite"
+                name="requiredMarkValue"
+                required
+              >
+                <Input placeholder="Raivaussiivous osoite" />
+              </Form.Item>
+              <Form.Item
+                label="Description/Viesti"
+                required
+                tooltip="Tähän voi antaa lisää infoa tai huomioita/ohjeita"
+              >
+                <Input.TextArea rows={3} placeholder="Huomio/Viestikenttä" />
+              </Form.Item>
+              <Divider />
 
-                <Button type="primary">Submit</Button>
-              </Form>
-            </Col>
-          )}
+              <Button type="primary">Submit</Button>
+            </Form>
+          </Col>
         </Row>
       </div>
     </div>
