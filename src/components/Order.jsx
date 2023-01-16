@@ -1,32 +1,58 @@
-import React, { useState } from "react";
-import { Col, Row, Form, Input, Button, Spin, Divider, Calendar } from "antd";
-//import { apiInstance } from "../utils/api";
+import React, { useState, useEffect } from "react";
+import {
+  Col,
+  Row,
+  Form,
+  Input,
+  Button,
+  Spin,
+  Divider,
+  Calendar,
+  Space,
+  Select,
+} from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { apiInstance } from "../utils/api";
 //import { useNavigate } from "react-router-dom";
+
+const { Option } = Select;
 
 const Order = () => {
   const onPanelChange = (value, mode) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
-  //const navigate = useNavigate();
-  //const [order, setOrder] = useState([]);
-  //const [loading, setLoading] = useState(false);
 
-  /*const getServices = async (values) => {
-    console.log("Form values", values);
+  //const navigate = useNavigate();
+  const [services, setServices] = useState([]);
+  const [loadingService, setLoadingService] = useState(false);
+  const [selectedServices, setSelectedServices] = useState([])
+
+  const getServices = async () => {
     try {
-      setLoading(true);
-      const response = await apiInstance.get("/services", values);
+      setLoadingService(true);
+      const response = await apiInstance.get("/services");
       const data = response.data; // getting the data
       console.log("THIS THE DATA", data);
       if (response.data.success) {
-        localStorage.setItem("token", response.data.accessToken);
-        setOrder(data.data);
+        setServices(data.data);
       }
     } catch (error) {
       console.log(error);
     }
-    setLoading(false);
-  };*/
+    setLoadingService(false);
+  };
+
+  useEffect(() => {
+    getServices();
+  }, []);
+
+  const onFinish = (values) => {
+    console.log("Received values of form:", values);
+  };
+
+  const onSelectService = (value) => {
+    console.log(value)
+  }
 
   return (
     <div
@@ -88,7 +114,74 @@ const Order = () => {
               </Form.Item>
               <Divider />
 
-              <Button type="primary">Submit</Button>
+              <Form.List name="services">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => (
+                      <Space
+                        key={key}
+                        style={{
+                          display: "flex",
+                          marginBottom: 8,
+                        }}
+                        align="baseline"
+                      >
+                        <Form.Item
+                          {...restField}
+                          name={[name, "id"]}
+                          noStyle
+                          rules={[
+                            {
+                              required: true,
+                              message: "Service",
+                            },
+                          ]}
+                        >
+                          <Select style={{display:"flex", justifyContent:"center"}}onChange={onSelectService} placeholder="Select Service">
+                            {services.map((service) => (
+                              <Option value={service.id}>{service.name}</Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                          {...restField}
+                          name={[name, "quantity"]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Missing Quantity/Määrä Puuttuu",
+                            },
+                            {
+                              type: "number",
+                              message:
+                                "Give a positive quantity/Anna Lukumäärä",
+                            },
+                          ]}
+                        >
+                          <Input placeholder="Quantity/Määrä" />
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => remove(name)} />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Add Service / Lisää Palvelu
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
             </Form>
           </Col>
         </Row>
