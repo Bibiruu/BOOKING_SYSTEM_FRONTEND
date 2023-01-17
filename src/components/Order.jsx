@@ -14,7 +14,6 @@ import {
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { apiInstance } from "../utils/api";
 //import { useNavigate } from "react-router-dom";
-
 const { Option } = Select;
 
 const Order = () => {
@@ -25,7 +24,9 @@ const Order = () => {
   //const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loadingService, setLoadingService] = useState(false);
-  const [selectedServices, setSelectedServices] = useState([])
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [form]=Form.useForm()
+
 
   const getServices = async () => {
     try {
@@ -51,7 +52,12 @@ const Order = () => {
   };
 
   const onSelectService = (value) => {
-    console.log(value)
+    console.log(value);
+    setSelectedServices((prev) => [...prev, value]);
+  };
+
+  const removeService = (name) => {
+    console.log(form.getFieldValue([name, "id"]))
   }
 
   return (
@@ -87,7 +93,7 @@ const Order = () => {
             span={12}
             offset={6}
           >
-            <Form layout="vertical">
+            <Form form={form} onFinish={onFinish} layout="vertical">
               <Calendar
                 style={{
                   width: "300px",
@@ -100,13 +106,14 @@ const Order = () => {
               />
               <Form.Item
                 label="Raivaussiivous osoite"
-                name="requiredMarkValue"
+                name="address"
                 required
               >
                 <Input placeholder="Raivaussiivous osoite" />
               </Form.Item>
               <Form.Item
                 label="Description/Viesti"
+                name="description"
                 required
                 tooltip="Tähän voi antaa lisää infoa tai huomioita/ohjeita"
               >
@@ -137,9 +144,21 @@ const Order = () => {
                             },
                           ]}
                         >
-                          <Select style={{display:"flex", justifyContent:"center"}}onChange={onSelectService} placeholder="Select Service">
+                          <Select
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                            onChange={onSelectService}
+                            placeholder="Select Service"
+                          >
                             {services.map((service) => (
-                              <Option value={service.id}>{service.name}</Option>
+                              <Option
+                                disabled={selectedServices.includes(service.id)}
+                                value={service.id}
+                              >
+                                {service.name}
+                              </Option>
                             ))}
                           </Select>
                         </Form.Item>
@@ -152,16 +171,11 @@ const Order = () => {
                               required: true,
                               message: "Missing Quantity/Määrä Puuttuu",
                             },
-                            {
-                              type: "number",
-                              message:
-                                "Give a positive quantity/Anna Lukumäärä",
-                            },
                           ]}
                         >
                           <Input placeholder="Quantity/Määrä" />
                         </Form.Item>
-                        <MinusCircleOutlined onClick={() => remove(name)} />
+                        <MinusCircleOutlined onClick={() => {remove(name); removeService(name)}} />
                       </Space>
                     ))}
                     <Form.Item>
