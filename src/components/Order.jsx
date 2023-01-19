@@ -17,16 +17,16 @@ import { apiInstance } from "../utils/api";
 const { Option } = Select;
 
 const Order = () => {
-  const onPanelChange = (value, mode) => {
-    console.log(value.format("YYYY-MM-DD"), mode);
+  const onPanelChange = (value) => {
+    setDate(value.format("YYYY-MM-DD"));
   };
 
   //const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loadingService, setLoadingService] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
-  const [form]=Form.useForm()
-
+  const [date, setDate] = useState("");
+  const [form] = Form.useForm();
 
   const getServices = async () => {
     try {
@@ -48,7 +48,8 @@ const Order = () => {
   }, []);
 
   const onFinish = (values) => {
-    console.log("Received values of form:", values);
+    const body = { ...values, date}
+    console.log("Received values of form:", body);
   };
 
   const onSelectService = (value) => {
@@ -57,8 +58,13 @@ const Order = () => {
   };
 
   const removeService = (name) => {
-    console.log(form.getFieldValue([name, "id"]))
-  }
+    //console.log(name);
+    //console.log(form.getFieldValue("services"));
+    const removedId = form.getFieldValue("services")[+name].id;
+    setSelectedServices((prev) =>
+      prev.filter((service) => service !== removedId)
+    );
+  };
 
   return (
     <div
@@ -102,19 +108,29 @@ const Order = () => {
                   borderradius: "8px",
                 }}
                 fullscreen={false}
-                onPanelChange={onPanelChange}
+                onSelect={onPanelChange}
               />
               <Form.Item
                 label="Raivaussiivous osoite"
                 name="address"
-                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Give an address",
+                  },
+                ]}
               >
                 <Input placeholder="Raivaussiivous osoite" />
               </Form.Item>
               <Form.Item
                 label="Description/Viesti"
                 name="description"
-                required
+                rules={[
+                  {
+                    required: true,
+                    message: "Viesti kenttään",
+                  },
+                ]}
                 tooltip="Tähän voi antaa lisää infoa tai huomioita/ohjeita"
               >
                 <Input.TextArea rows={3} placeholder="Huomio/Viestikenttä" />
@@ -140,7 +156,7 @@ const Order = () => {
                           rules={[
                             {
                               required: true,
-                              message: "Service",
+                              message: "Atleast one service is required",
                             },
                           ]}
                         >
@@ -154,6 +170,7 @@ const Order = () => {
                           >
                             {services.map((service) => (
                               <Option
+                                key={service.id}
                                 disabled={selectedServices.includes(service.id)}
                                 value={service.id}
                               >
@@ -175,7 +192,12 @@ const Order = () => {
                         >
                           <Input placeholder="Quantity/Määrä" />
                         </Form.Item>
-                        <MinusCircleOutlined onClick={() => {remove(name); removeService(name)}} />
+                        <MinusCircleOutlined
+                          onClick={() => {
+                            removeService(name);
+                            remove(name);
+                          }}
+                        />
                       </Space>
                     ))}
                     <Form.Item>
