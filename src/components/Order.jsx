@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Col,
-  Row,
   Form,
   Input,
   Button,
@@ -114,11 +112,15 @@ const Order = () => {
           <h3>TILAUS</h3>
         </div>
 
-        <div style={{ height: "100%", marginBottom: "3rem", display:"flex", justifyContent:"center" }}>
-          <div
-            style={{ backgroundColor: "#fff", padding: "1rem" }}           
-            
-          >
+        <div
+          style={{
+            height: "100%",
+            marginBottom: "3rem",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ backgroundColor: "#fff", padding: "1rem" }}>
             <Form form={form} onFinish={onFinish} layout="vertical">
               <Calendar
                 style={{

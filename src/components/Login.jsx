@@ -21,7 +21,7 @@ const Login = () => {
           navigate("/bookings");
         }, 3000);
       } else {
-      message.error("Wrong credentials"); // antdesign error handling
+        message.error("Wrong credentials"); // antdesign error handling
       }
       setLoading(false);
     } catch (error) {
@@ -88,7 +88,7 @@ const Login = () => {
           >
             Log in
           </Button>
-          Or <a href="#">register now!</a>
+          Or <a href="http://localhost:3000/">register now!</a>
         </Form.Item>
       </Form>
     </div>
