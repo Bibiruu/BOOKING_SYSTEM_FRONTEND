@@ -29,6 +29,7 @@ const Bookings = () => {
       style={{
         display: "flex",
         justifyContent: "center",
+        padding: "1rem",
         paddingTop: "4rem",
         backgroundColor: "#eee",
       }}
@@ -57,9 +58,19 @@ const Bookings = () => {
         <Row gutter={16}>
           {loading ? (
             <Spin />
+          ) : !bookings.length ? (
+            <p>No bookings yet</p>
           ) : (
             bookings.map((booking) => (
-              <Col span={6} style={{ paddingBottom: "1rem" }}>
+              <Col
+                key={booking.id}
+                style={{ paddingBottom: "1rem" }}
+                xs={24}
+                sm={12}
+                md={6}
+                lg={4}
+                xl={2}
+              >
                 <Card
                   title={booking.date}
                   style={{
@@ -82,8 +93,8 @@ const Bookings = () => {
 
                   <h4>SERVICES</h4>
                   <ul style={{ paddingLeft: 0, listStyle: "none" }}>
-                    {booking.booking_has_service.map((bService) => (
-                      <li>
+                    {booking.booking_has_service.map((bService, i) => (
+                      <li key={i}>
                         <div
                           style={{
                             display: "flex",

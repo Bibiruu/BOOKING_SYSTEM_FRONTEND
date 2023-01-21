@@ -10,13 +10,17 @@ import {
   Calendar,
   Space,
   Select,
+  InputNumber,
+  message,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { apiInstance } from "../utils/api";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const Order = () => {
+  const navigate = useNavigate();
+
   const onPanelChange = (value) => {
     setDate(value.format("YYYY-MM-DD"));
   };
@@ -24,6 +28,7 @@ const Order = () => {
   //const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loadingService, setLoadingService] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const [date, setDate] = useState("");
   const [form] = Form.useForm();
@@ -47,9 +52,25 @@ const Order = () => {
     getServices();
   }, []);
 
-  const onFinish = (values) => {
-    const body = { ...values, date}
+  const onFinish = async (values) => {
+    const body = { ...values, date }; //combining and conversion to milliseconds
     console.log("Received values of form:", body);
+    try {
+      setFormSubmitting(true);
+      const response = await apiInstance.post("/bookings", body);
+      if (response.data.success) {
+        message.success("Booking successful");
+        setTimeout(() => {
+          navigate("/bookings");
+        }, 1000);
+      } else {
+        message.error("Error in booking.");
+      }
+    } catch (error) {
+      message.error("Error, try again.");
+      console.log(error);
+    }
+    setFormSubmitting(false);
   };
 
   const onSelectService = (value) => {
@@ -60,7 +81,7 @@ const Order = () => {
   const removeService = (name) => {
     //console.log(name);
     //console.log(form.getFieldValue("services"));
-    const removedId = form.getFieldValue("services")[+name].id;
+    const removedId = form.getFieldValue("services")[+name].service_id;
     setSelectedServices((prev) =>
       prev.filter((service) => service !== removedId)
     );
@@ -93,11 +114,10 @@ const Order = () => {
           <h3>TILAUS</h3>
         </div>
 
-        <Row style={{ height: "100%", marginBottom: "3rem" }} gutter={16}>
-          <Col
-            style={{ backgroundColor: "#fff", padding: "1rem" }}
-            span={12}
-            offset={6}
+        <div style={{ height: "100%", marginBottom: "3rem", display:"flex", justifyContent:"center" }}>
+          <div
+            style={{ backgroundColor: "#fff", padding: "1rem" }}           
+            
           >
             <Form form={form} onFinish={onFinish} layout="vertical">
               <Calendar
@@ -151,7 +171,7 @@ const Order = () => {
                       >
                         <Form.Item
                           {...restField}
-                          name={[name, "id"]}
+                          name={[name, "service_id"]}
                           noStyle
                           rules={[
                             {
@@ -160,24 +180,30 @@ const Order = () => {
                             },
                           ]}
                         >
-                          <Select
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                            onChange={onSelectService}
-                            placeholder="Select Service"
-                          >
-                            {services.map((service) => (
-                              <Option
-                                key={service.id}
-                                disabled={selectedServices.includes(service.id)}
-                                value={service.id}
-                              >
-                                {service.name}
-                              </Option>
-                            ))}
-                          </Select>
+                          {loadingService ? (
+                            <Spin />
+                          ) : (
+                            <Select
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                              onChange={onSelectService}
+                              placeholder="Select Service"
+                            >
+                              {services.map((service) => (
+                                <Option
+                                  key={service.id}
+                                  disabled={selectedServices.includes(
+                                    service.id
+                                  )}
+                                  value={service.id}
+                                >
+                                  {service.name}
+                                </Option>
+                              ))}
+                            </Select>
+                          )}
                         </Form.Item>
 
                         <Form.Item
@@ -190,7 +216,7 @@ const Order = () => {
                             },
                           ]}
                         >
-                          <Input placeholder="Quantity/Määrä" />
+                          <InputNumber min={1} placeholder="Quantity/Määrä" />
                         </Form.Item>
                         <MinusCircleOutlined
                           onClick={() => {
@@ -214,13 +240,17 @@ const Order = () => {
                 )}
               </Form.List>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  loading={formSubmitting}
+                  type="primary"
+                  htmlType="submit"
+                >
                   Submit
                 </Button>
               </Form.Item>
             </Form>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </div>
   );
