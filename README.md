@@ -20,8 +20,6 @@ What I learned
 
 Configuring the project to your local machine:
 
--Download mySQL workbench. -Create a .env file and add a environmental variable called DATABASE_URL and TOKEN_KEY. -Connect your mySQL connection string with the environmental variable like this: -DATABASE_URL = (your connection string) and -TOKEN_KEY = Some type of password
-
 -Open your terminal and make sure you are in the backend folder. Then run these commands in the terminal in the exact order:
 
 ### `npm install`
