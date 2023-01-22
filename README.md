@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+Created a booking system for clients that need to dispose certain materials from their building.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Stacks used:
 
-## Available Scripts
+Frontend: React, JSX, Backend: Axios, Node.js Database/ handling: MYSQL, Prisma.js Design: UI / Antdesign, CSS
 
-In the project directory, you can run:
+*Responsive design.
 
+Implementation: *Write JSX and React components *Use the useState/useEffect hook in React. *Call APIs from React and put the data into state. *Axios and instance handling *Build multi-page applications using React Router. *Creating a realational table in mySQL *Adding deleting, editing and migrating of the mySQL database using Prisma.js *Scanning and fetching data through prisma features *Building an organized backend with authentication methods in: -JWT Token -Bearer Token -Token hashing -Middlewares *Working with postman for rigorious backend testing
+
+Frontend setup with Antdesign. Learning to utilize and customise templates and making the userinterface responsive.
+Lastly having attention to details in cleaning the console log out of small red errors and matching the userinterface id names to exactly to the standard of backend id's for bug prevention. *Runing the code lastly to detect/observe the flow of the application
+Next step is to add more features and turn JSX into Typescript for bug prevention efficiancy and to turn this into a overall cutting-edge code. =)
+
+Work flow: Database creation => Backend => Frontend
+
+What I learned
+-Planning the project and brainstorming the database interface based on client needs took suprisingly a while. Had to plan the architecture in detail before starting to create the "matching" backend for utilizing the database correctly. -Learned thorough planning in a team where client interaction and customer service played a vital role.
+-How to build easily readable, clean and scalable code with attention to detail. -Creating a work flow for the backend and building it systematically. -Working with a UI
+
+Configuring the project to your local machine:
+
+-Download mySQL workbench. -Create a .env file and add a environmental variable called DATABASE_URL and TOKEN_KEY. -Connect your mySQL connection string with the environmental variable like this: -DATABASE_URL = (your connection string) and -TOKEN_KEY = Some type of password
+
+-Open your terminal and make sure you are in the backend folder. Then run these commands in the terminal in the exact order:
+
+### `npm install`
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Enjoy :)
