@@ -25,4 +25,9 @@ Configuring the project to your local machine:
 ### `npm install`
 ### `npm start`
 
+put the end point to  
+/register or
+/login
+
 Enjoy :)
+
