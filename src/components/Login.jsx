@@ -88,7 +88,7 @@ const Login = () => {
           >
             Log in
           </Button>
-          Or <a href="http://localhost:3000/">register now!</a>
+          Or <a href="/registration">register now!</a>
         </Form.Item>
       </Form>
     </div>
