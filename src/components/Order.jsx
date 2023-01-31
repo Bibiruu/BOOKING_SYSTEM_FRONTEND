@@ -23,7 +23,6 @@ const Order = () => {
     setDate(value.format("YYYY-MM-DD"));
   };
 
-  //const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loadingService, setLoadingService] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
@@ -77,8 +76,6 @@ const Order = () => {
   };
 
   const removeService = (name) => {
-    //console.log(name);
-    //console.log(form.getFieldValue("services"));
     const removedId = form.getFieldValue("services")[+name].service_id;
     setSelectedServices((prev) =>
       prev.filter((service) => service !== removedId)
