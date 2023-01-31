@@ -170,7 +170,7 @@ const Registration = () => {
           >
             Register
           </Button>
-          Or <a href="/login">register now!</a>
+          Or <a href="/">register now!</a>
         </Form.Item>
       </Form>
     </div>
