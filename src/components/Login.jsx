@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { instance } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ const Login = () => {
           >
             Log in
           </Button>
-          Or <a href="/registration">register now!</a>
+          Or <Link to="/registration">register now!</Link>
         </Form.Item>
       </Form>
     </div>
