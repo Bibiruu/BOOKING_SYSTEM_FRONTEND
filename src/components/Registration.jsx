@@ -18,7 +18,7 @@ const Registration = () => {
         localStorage.setItem("token", result.data.accessToken); // saving data in the local storage
         message.success("Registration Successful");
         setTimeout(() => {
-          navigate("/login");
+          navigate("/");
         }, 3000);
       } else {
         message.error("Wrong credentials"); // antdesign error handling
