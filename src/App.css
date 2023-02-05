@@ -21,18 +21,4 @@
   width: 100%;
 }
 
-@media (min-device-width: 768px) and (max-device-width: 1440px) {
-  .auth-container {
-    padding: 5px;
-  }
-  .auth-form {
-    padding-bottom: 200px;
-  }
-
-  .header {
-    justify-content: baseline;
-    margin: 50px;
-    padding-top: 100px;
-  }
-}
 
