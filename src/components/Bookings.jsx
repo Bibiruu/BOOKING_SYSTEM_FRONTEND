@@ -68,7 +68,7 @@ const Bookings = () => {
                 xs={24}
                 sm={12}
                 md={6}
-                lg={4}
+                lg={6}
               >
                 <Card
                   title={booking.date}
